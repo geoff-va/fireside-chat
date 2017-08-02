@@ -52,9 +52,30 @@
         // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
         try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        // let app = firebase.app();
+        //  let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+        //  document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        // firebase.initializeApp(config);
+
+        // Get a reference to the database service
+        var database = firebase.database();
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                console.log('user email: ' + user.email);
+                database.ref('/rooms/123').once('value').then(function(data) {
+                    console.log("Data: " + data.val().name);
+                });
+            } else {
+                console.log('no user logged in');
+            }
+        });
+
+        firebase.auth().signInWithEmailAndPassword('ge.off.von@gmail.com', 'testuser').catch(function(error) {
+            console.log(error.code + " -- " + error.message);
+        });
+        
+
+
         } catch (e) {
           console.error(e);
           document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
