@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "rt-chat-1bd06"
+    "default": "rt-chat-1bd06",
+    "staging": "rt-chat-1bd06"
   }
 }
