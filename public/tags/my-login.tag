@@ -2,22 +2,15 @@
   <form onsubmit="{ login }">
     <div>
       <label for="username">Username</label>
-      <input type="text" ref="username" name="username" placeholder="username"/>
+      <input type="email" ref="username" name="username" placeholder="username"/>
       <br>
       <label for="password">Password</label>
       <input type="password" ref="password" name="password" placeholder="password">
-    </div>
-    <div class="error">
-      <ul>
-        <li each={ error in errors }>
-      </ul>
     </div>
     <button type="submit">Login</button>
   </form>
 
   <script>
-    this.errors = [];
-
     /* login user with username and password */
     login(e) {
       e.preventDefault();
