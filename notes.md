@@ -44,12 +44,15 @@
 
 ## Page Structure:
     - Login Page
-        - Has link to Create new user
+        - Has link to Sign Up
     - Room Selection Page
         - Select Room to join
     - Chat Room
         - Where messages are exchanged
         - Back button to the Room Selection page
+    - Nav Bar
+        - Shown on all pages if user is authenticated
+        - Shows Username, Logout button
     - All pages should redirect to login if user not auth'd
 
 ## Process:
@@ -58,20 +61,37 @@
     - Overview of Hosting
     - Overview of Database
     - Overview of Auth System - Done
-    - Overview of RiotJS
+    - Overview of RiotJS - Done
 
 ### Design
     - Design DB Structure
     - Design App Structure
+        - Tags
+            - Nav (only shown if user authenticated)
+            - Login
+            - Signup
+            - Room Selection
+                - Add New Room
+            - Chat Room
+                - Room Messages (sent messages)
+                - Send Message Window (input for messages you want to send)
     - Design Page Flow
     - Site Styles
 
 ### Implementation
     - Serve site locally
     - Implement something using RiotJS
+        - Create tag and successfully use/display it
+        - Create tag structure outlines
     - Communicate with the database
         - Read from database
         - Write to database
     - Test Auth system - get user information and display it
     - Send a message to chat room and have it pushed to other users
+
+## Riot JS Notes
+    - Allows you to build reusable components that glue together html, style, and logic
+    - Uses custom HTML tags to do this
+        - .tag files comprise the HTML and the Logic
+            - Include CSS in the main HTML page - not sure about best place for this yet
 
