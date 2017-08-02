@@ -41,6 +41,22 @@
             - Message - What was the message
         - Users
             - May be managed by Firebase Auth system?
+                - Doesn't seem to be a need to hold users in the DB as they
+                are managed by the builtin Auth system
+    ### Querying
+        - You start by getting a reference to a path
+            - `var path_thing = firebase.database().ref('path/to/start/from')`
+        - Then you add:
+            - `.orderByChild(keyName)`
+            - `.orderByKey()`
+            - `.orderByValue()`
+        - Next add:
+            - `limitToFirst(num)`
+            - `limitToLast(num)`
+            - `startAt(value)`
+            - `endAt(value)`
+            - `equalTo(value)`
+        
 
 ## Page Structure:
     - Login Page

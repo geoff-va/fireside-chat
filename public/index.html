@@ -59,21 +59,53 @@
 
         // Get a reference to the database service
         var database = firebase.database();
+
+        /* Register callback when login state changes to display username */
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 console.log('user email: ' + user.email);
-                database.ref('/rooms/123').once('value').then(function(data) {
-                    console.log("Data: " + data.val().name);
-                });
+                /*
+                var newRoom = {
+                    name: 'Room 3',
+                    description: 'Desc for Room 3'
+                };
+                /*
+
+                /* Creates new key and adds new Room
+                var newRoomId = firebase.database().ref().child('rooms')
+                    .push().key;
+                console.log('new room id: ' + newRoomId);
+                console.log('newRoom: ' + newRoom);
+                var updates = {};
+                updates['/rooms/' + newRoomId] = newRoom;
+                database.ref().update(updates);
+                */
+
+                /* Query the database for a specific value */
+                var key = 'name';
+                var value = 'Room 3';
+                database.ref('rooms')
+                    .orderByChild('name')
+                    .equalTo(value)
+                    .once('child_added', function (snapshot) {
+                        console.log(snapshot.val());
+                    });
+
             } else {
                 console.log('no user logged in');
             }
         });
 
+        /* Register listener for changes to Rooms path */
+        var roompath = database.ref('rooms');
+        roompath.on('value', function(data) {
+            console.log(data.val());
+        });
+
+        /* Sign in a user */
         firebase.auth().signInWithEmailAndPassword('ge.off.von@gmail.com', 'testuser').catch(function(error) {
             console.log(error.code + " -- " + error.message);
         });
-        
 
 
         } catch (e) {
