@@ -6,13 +6,17 @@
       <br>
       <label for="password">Password</label>
       <input type="password" ref="password" name="password" placeholder="password">
+      <br>
+      <span class="error">{ error }</span>
     </div>
     <button type="submit">Login</button>
   </form>
 
   <script>
+
     /* login user with username and password */
     login(e) {
+      self = this;  // keep this context
       e.preventDefault();
       var refs = this.refs;
       
@@ -23,7 +27,9 @@
           })
       .catch(function(error) {
         console.log(error.message);
-          });
+        self.error = error.message;
+        self.update();
+      });
     }
   </script>
 
