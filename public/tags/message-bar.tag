@@ -16,7 +16,7 @@
       var ref = firebase.database().ref('messages/' + this.roomId);
       var content = {
         message: this.refs.message.value,
-        userid: firebase.auth().currentUser.uid,
+        useremail: firebase.auth().currentUser.email,
         timestamp: Date.now()
       }
       ref.push(content);
