@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/4.2.0/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/4.2.0/firebase-auth.js"></script>
-    <script defer src="/__/firebase/4.2.0/firebase-database.js"></script>
-    <!-- <script defer src="/__/firebase/4.2.0/firebase-messaging.js"></script> -->
-    <!-- <script defer src="/__/firebase/4.2.0/firebase-storage.js"></script> -->
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
   </head>
 
   <body>
     <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
     <script>
       // Initialize Firebase
       var config = {
@@ -34,6 +28,7 @@
     <my-login></my-login>
     <sign-up></sign-up>
     <chat-rooms></chat-rooms>
+    <add-room></add-room>
     <room-messages></room-messages>
     <message-bar></message-bar>
 
@@ -42,6 +37,7 @@
     <script type="riot/tag" src="tags/chat-rooms.tag"></script>
     <script type="riot/tag" src="tags/room-messages.tag"></script>
     <script type="riot/tag" src="tags/chat-rooms.tag"></script>
+    <script type="riot/tag" src="tags/add-room.tag"></script>
     <script type="riot/tag" src="tags/message-bar.tag"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/riot@3.6/riot+compiler.min.js"></script>
@@ -49,8 +45,8 @@
     <script>riot.mount('sign-up')</script>
     <script>riot.mount('chat-rooms')</script>
     <script>riot.mount('room-messages')</script>
+    <script>riot.mount('add-room')</script>
     <script>riot.mount('message-bar')</script>
-
 
   </body>
 </html>

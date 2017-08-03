@@ -17,7 +17,7 @@
         message: this.refs.message.value,
         useremail: firebase.auth().currentUser.email,
         timestamp: Date.now()
-      }
+      };
       ref.push(content);
       this.refs.message.value = '';
     }
