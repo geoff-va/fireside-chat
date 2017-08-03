@@ -11,7 +11,8 @@
     <script src="/__/firebase/4.2.0/firebase-auth.js"></script>
     <script src="/__/firebase/4.2.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js"></script>
-
+    
+    <my-nav></my-nav>
     <my-login></my-login>
     <sign-up></sign-up>
     <chat-rooms></chat-rooms>
@@ -19,6 +20,7 @@
     <room-messages></room-messages>
     <message-bar></message-bar>
 
+    <script type="riot/tag" data-src="tags/my-nav.tag"></script>
     <script type="riot/tag" data-src="tags/my-login.tag"></script>
     <script type="riot/tag" data-src="tags/sign-up.tag"></script>
     <script type="riot/tag" data-src="tags/chat-rooms.tag"></script>
@@ -29,12 +31,15 @@
   
     <script src="https://cdn.jsdelivr.net/npm/riot@3.6/riot+compiler.min.js"></script>
   
-    <script>riot.mount('my-login')</script>
-    <script>riot.mount('sign-up')</script>
-    <script>riot.mount('chat-rooms')</script>
-    <script>riot.mount('room-messages')</script>
-    <script>riot.mount('add-room')</script>
-    <script>riot.mount('message-bar')</script>
+    <script>
+      riot.mount('my-nav');
+    </script>
+    <!--<script>riot.mount('sign-up')</script>-->
+    <!--<script>riot.mount('chat-rooms')</script>-->
+    <!--<script>riot.mount('room-messages')</script>-->
+    <!--<script>riot.mount('add-room')</script>-->
+    <!--<script>riot.mount('message-bar')</script>-->
+    <script type="text/javascript" src="scripts/router.js"></script>
 
   </body>
 </html>
