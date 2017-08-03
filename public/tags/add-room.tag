@@ -38,7 +38,6 @@
               this.error = "Sorry, but " + self.refs.roomname.value + " already exists!";
             }
         });
-
     }
 
   </script>
