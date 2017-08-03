@@ -64,8 +64,12 @@
 ## Page Structure:
     - Login Page
         - Has link to Sign Up
+    - Sign Up Page
+        - Create a new user
     - Room Selection Page
         - Select Room to join
+    - Add New Room
+        - Create new Chat Room
     - Chat Room
         - Where messages are exchanged
         - Back button to the Room Selection page
@@ -114,3 +118,4 @@
         - .tag files comprise the HTML and the Logic
             - Include CSS in the main HTML page - not sure about best place for this yet
 
+## App Organization and L
