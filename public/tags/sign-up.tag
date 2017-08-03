@@ -29,11 +29,17 @@
       createUserWithEmailAndPassword(refs.username.value, refs.password1.value)
       .then(function() {
         console.log('Successfully created user');
+        refs.username.value = '';
+        refs.password1.value = '';
+        refs.password2.value = '';
           })
       .catch(function(error) {
         // TODO: Check error codes so we can send proper message to proper span
         console.log(error.message);
         self.pwd1error = error.message;
+        refs.username.value = '';
+        refs.password1.value = '';
+        refs.password2.value = '';
         self.update();
           });
     }

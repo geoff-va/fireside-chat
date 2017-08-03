@@ -56,6 +56,9 @@
             - `startAt(value)`
             - `endAt(value)`
             - `equalTo(value)`
+        - To execute query:
+            - `.once("value || child_added || etc...", function(snap) {...})`
+            - or use `.on(...)`
         
 
 ## Page Structure:

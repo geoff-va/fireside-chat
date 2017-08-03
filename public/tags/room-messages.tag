@@ -3,8 +3,7 @@
   <div>
     <table>
       <tr each={ messages }>
-        <td>
-          <p>{ message }</p>
+        <td>{ useremail } - { message }
         </td>
       </tr>
     </table>

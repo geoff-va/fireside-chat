@@ -7,7 +7,6 @@
   </div>
 
 
-
   <script>
     this.roomId = "-KqZegV50COjE_qkYkGw";
 
@@ -20,6 +19,7 @@
         timestamp: Date.now()
       }
       ref.push(content);
+      this.refs.message.value = '';
     }
     </script>
 </message-bar>

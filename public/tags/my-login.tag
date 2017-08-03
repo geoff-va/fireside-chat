@@ -13,7 +13,6 @@
   </form>
 
   <script>
-
     /* login user with username and password */
     login(e) {
       self = this;  // keep this context
@@ -24,10 +23,14 @@
       signInWithEmailAndPassword(refs.username.value, refs.password.value)
       .then(function() {
         console.log("Successfully signed in");
+        refs.username.value = '';
+        refs.password.value = '';
           })
       .catch(function(error) {
         console.log(error.message);
         self.error = error.message;
+        refs.username.value = '';
+        refs.password.value = '';
         self.update();
       });
     }
