@@ -17,13 +17,29 @@
   <script>
     self = this;
     self.rooms = {};
-
     var ref = firebase.database().ref('rooms');
+
+    /* Subscribe to room additions */
     ref.orderByChild('name')
       .on('child_added', function(snap) {
         self.rooms[snap.key] = snap.val();
         self.update();
       });
+
+    /* Subscribe to removals of rooms */
+    ref.orderByChild('name')
+      .on('child_removed', function(snap) {
+        delete self.rooms[snap.key];
+        self.update();
+      });
+
+    /* Subscribe to changes in room details */
+    ref.orderByChild('name')
+      .on('child_changed', function(snap) {
+        self.rooms[snap.key] = snap.val();
+        self.update();
+      });
+
 
   </script>
 
