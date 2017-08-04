@@ -8,8 +8,6 @@
 
   <script>
     var self = this;
-    
-
     logout(e) {
       firebase.auth().signOut().then(function() {
         console.log("User Signed Out");

@@ -6,7 +6,7 @@
         <th>Description</th>
         <th># Occupants</th>
       </tr>
-      <tr each={ val, id in rooms }>
+      <tr onclick={ route } each={ val, id in rooms } id={ id }>
         <td>{ val.name }</td>
         <td>{ val.description }</td>
         <td>{ val.members }</td>
@@ -40,6 +40,10 @@
         self.update();
       });
 
+    route(e) {
+      var room = e.target.parentElement.getAttribute('id');
+      window.location = "#/room/" + room;
+    }
 
   </script>
 

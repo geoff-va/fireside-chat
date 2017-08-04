@@ -19,24 +19,28 @@
 
     /* Search through routes and run cb for first route matching `path` */
     var processView = function(url) {
+      // Unmount the currently mounted tag to make room for next view
       if (currentTag !== null) {
         currentTag[0].unmount(true);
-        console.log("Unmounted Tag");
         currentTag = null;
       };
+
+      console.log("processing view");
       var route = null;
       for (i=0; i<routes.length; i++) {
         route = routes[i]
-        if (parseUrl(route.regex, url)) {
-          // URL match - ru CB
-          console.log("Running cb for" + route.regex);
+        params = parseUrl(route.regex, url)
+        if (params) {
+          // Maybe all riot rendering should be done somewhere else ...
           riot.compile(route.location, function() {
-            currentTag = riot.mount(route.name);
-            console.log(currentTag);
+            console.log("loading: " + route.name);
+            console.log("using params: " + params);
+            currentTag = riot.mount(route.name, params);
           });
           return;
         }
       }
+      console.log("No matching views for url");
       // No URL match - do something by default?
     }
 
