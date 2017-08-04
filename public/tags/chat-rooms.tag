@@ -12,6 +12,7 @@
         <td>{ val.members }</td>
       </tr>
     </table>
+    <a href="#/rooms/create">Create Room</a>
   </div>
 
   <script>
@@ -39,7 +40,7 @@
         self.rooms[snap.key] = snap.val();
         self.update();
       });
-
+  
     route(e) {
       var room = e.target.parentElement.getAttribute('id');
       window.location = "#/room/" + room;

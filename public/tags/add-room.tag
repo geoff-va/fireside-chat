@@ -11,10 +11,15 @@
       <br>
       <span class="error">{ error }</span>
     </form>
+    <a onclick={ back } href='#/'>Back</a>
   </div>
 
 
   <script>
+  back(e) {
+    history.back();
+  }
+
     create_room(e) {
       e.preventDefault();
       var self = this;
