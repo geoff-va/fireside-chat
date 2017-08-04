@@ -1,27 +1,26 @@
-;(function(window, firebase, riot, rtcApp) {
+;(function(window, document, firebase, riot, rtcApp) {
   var app = rtcApp.app = rtcApp.all || (function() {
+    var router = rtcApp.router;
+
+    router.addRoute("^#/login$", 'tags/my-login.tag', 'my-login');
+    router.addRoute("^#/signup$", 'tags/sign-up.tag', 'sign-up');
+
+    window.addEventListener('hashchange', function(e) {
+      router.processView(window.location.hash);
+    });
+
+    riot.mount('my-nav'); // always keep this mounted
+
+    // Load appropriate part of app based on hash
+    console.log("page load location: " + window.location.hash);
+    router.processView(window.location.hash);
+
+    function unmountTags(tags) {
+      for (i=0; i<tags.length; i++) {
+        tags[i].unmount();
+      }
+    }
 
   }());
 
-
-  //riot.compile(function() {
-    //tags.push(riot.mount('my-login', {auth: auth}));
-    //console.log(tags);
-  //});
-
-
-  //firebase.auth().onAuthStateChanged(function(user) {
-    //if (user) {
-      //// Show the Chat Rooms Page
-      //console.log("Caught a user logging in -- " + user.email);
-      //auth.trigger('signin');
-      //riot.compile(function() {
-        //tags.push(riot.mount('chat-rooms'));
-      //});
-    //} else {
-      //// Show the login page
-      //console.log("No User logged in");
-    //}
-  //});
-
-}(window, firebase, riot, window._rtcApp = window._rtcApp || {}));
+}(window, document, firebase, riot, window._rtcApp = window._rtcApp || {}));

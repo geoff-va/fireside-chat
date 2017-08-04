@@ -9,12 +9,6 @@
   <script>
     var self = this;
     
-    opts.auth.on('signin', function() {
-      var user = firebase.auth().currentUser;
-      console.log(user.email);
-      self.useremail = user.email ? user.email : '';
-      self.update();
-    });
 
     logout(e) {
       firebase.auth().signOut().then(function() {
