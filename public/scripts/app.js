@@ -1,9 +1,7 @@
-;(function(window, firebase, riot) {
-  // Create Router
-  // Add Routes
+;(function(window, firebase, riot, rtcApp) {
+  var app = rtcApp.app = rtcApp.all || (function() {
 
-
-
+  }());
 
 
   //riot.compile(function() {
@@ -25,4 +23,5 @@
       //console.log("No User logged in");
     //}
   //});
-})(window, firebase, riot);
+
+}(window, firebase, riot, window._rtcApp = window._rtcApp || {}));
