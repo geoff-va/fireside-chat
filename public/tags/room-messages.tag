@@ -14,8 +14,9 @@
     this.messages = [];
     var self = this;
 
-    var roomId = "-KqZegV50COjE_qkYkGw";
-    var ref = firebase.database().ref('messages/' + roomId);
+    var ref = firebase.database().ref('messages/' + opts.roomid);
+    console.log('room-message: ' + opts.roomid);
+
     // TODO: Limit to last X messages, add more as user scrolls up in history
     ref.orderByChild('timestamp')
       .on('child_added', function(snap) {

@@ -11,6 +11,7 @@
     </div>
     <button type="submit">Login</button>
   </form>
+  <a href="/#/signup">Sign Up</a>
 
   <script>
     /* login user with username and password */
@@ -34,6 +35,7 @@
         self.update();
       });
     }
+
   </script>
 
 </my-login>
