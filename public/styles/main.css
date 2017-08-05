@@ -52,15 +52,16 @@ a.button {
 }
 
 .input-group {
-  margin: 3px;
+  display: inline-block;
+  margin: 3px auto;
 }
 
 .subtle-text {
   font-size: 0.75em;
 }
 
-.my-login {
-  margin: auto;
-  width: 220px;
-  padding: 50px;
+.centered-block {
+  text-align: center;
+  margin: 0 auto;
+  width: 300px;
 }

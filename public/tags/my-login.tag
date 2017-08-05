@@ -1,14 +1,14 @@
 <my-login>
-  <div class="my-login">
+  <div class="centered-block">
     <form onsubmit="{ login }">
       <div class="input-group">
-        <label for="username">Username</label><br>
-        <input size="25" type="email" ref="username" name="username" placeholder="john@doe.com"/>
+        <label for="username">User Email</label><br>
+        <input class="center" size="25" type="email" ref="username" name="username" placeholder="john@doe.com"/>
       </div>
       <div class="input-group">
         <label for="password">Password</label><br>
-        <input size="25" type="password" ref="password" name="password" placeholder="Password">
-        <span class="error">{ error }</span>
+        <input class="center" size="25" type="password" ref="password" name="password">
+        <div class="error center">{ error }</div>
       </div>
       <div class="center">
         <button class="button" type="submit">Login</button>
