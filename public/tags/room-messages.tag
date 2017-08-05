@@ -1,5 +1,5 @@
 <room-messages>
-  <h3>Messages</h3>
+  <h3>Chatting in: { roomname }</h3>
   <div>
     <table>
       <tr each={ messages }>
@@ -12,13 +12,20 @@
 
   <script>
     this.messages = [];
+    this.roomname = '';
     var self = this;
+  
+    // Retrieve room name
+    var roomref = firebase.database().ref('rooms/' + opts.roomid);
+    roomref.once('value', function(snap) {
+      self.roomname = snap.val().name;
+    });
 
-    var ref = firebase.database().ref('messages/' + opts.roomid);
+    var msgref = firebase.database().ref('messages/' + opts.roomid);
     console.log('room-message: ' + opts.roomid);
 
     // TODO: Limit to last X messages, add more as user scrolls up in history
-    ref.orderByChild('timestamp')
+    msgref.orderByChild('timestamp')
       .on('child_added', function(snap) {
         self.messages.push(snap.val());
         self.update();
