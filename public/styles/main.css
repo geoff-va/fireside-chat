@@ -1,6 +1,8 @@
 body {
   font-family: 'Open Sans', sans-serif;
   margin: 0px;
+  background-color: #f4f7f9;
+  color: #080500;
 }
 
 hr {
@@ -27,19 +29,25 @@ a:visited {
 }
 
 a.button {
-  background-color: gray;
+  background-color: #746A5C;
   text-decoration: none;
   color: black; 
   cursor: default;
 }
 
 .main-content {
+  margin-top:50px;
   padding: 10px;
 }
 
 .header {
-  border-bottom: 1px solid black;
-  padding: 10px;
+  border-bottom: 1px solid #DA891B;
+  height: 50px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  background-color: #DA891B;
+  color: #FFD59C;
 }
 
 .error {
@@ -64,4 +72,35 @@ a.button {
   text-align: center;
   margin: 0 auto;
   width: 300px;
+}
+
+.room-table {
+  border-collapse: collapse;
+}
+
+.room-row:hover {
+  background-color: #FFD59C;
+}
+
+.room-table {
+  width: 100%;
+  overflow-y: auto;
+}
+
+.aligned-label {
+  display: inline-block;
+  float: left;
+  clear: left;
+  text-align: right;
+  width: 150px;
+  padding: 3px 5px 3px 0px;
+}
+
+.aligned-input {
+  display: inline-block;
+  float: left;
+}
+
+.inline {
+  display: inline-block;
 }
