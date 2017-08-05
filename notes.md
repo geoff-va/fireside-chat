@@ -59,13 +59,16 @@
         - To execute query:
             - `.once("value || child_added || etc...", function(snap) {...})`
             - or use `.on(...)`
-        
 
 ## Page Structure:
     - Login Page
         - Has link to Sign Up
+    - Sign Up Page
+        - Create a new user
     - Room Selection Page
         - Select Room to join
+    - Add New Room
+        - Create new Chat Room
     - Chat Room
         - Where messages are exchanged
         - Back button to the Room Selection page
@@ -113,4 +116,32 @@
     - Uses custom HTML tags to do this
         - .tag files comprise the HTML and the Logic
             - Include CSS in the main HTML page - not sure about best place for this yet
+
+## App Architecture
+    - Would prefer a CommonJS style require loader, but can't use packages 
+    and probably shouldn't reuse tutorial to create it
+        - Defining namespace using `;(function(params...) {...})(params...)` seems good
+    - Global Namespace
+        - riot
+        - firebase
+        - _rtcapp
+    - router
+        - `tags` = `[array of mounted tags]` -- don't really like this here ...
+        - `routes` - `[{"route/path", callback}, {...}]`
+        - `parseHash(hash)` - Figure out if there is a hash match
+        - `addRoute(path, cb)` - Adds a `{"route/path", callback()}`
+            - route fn contract
+                - returns tag name to use
+                - returns opt to pass to tag (django context equivalent)
+        - `processView(path)` - run the callback in the `routes` @ `path`
+            - where to go if route doesn't exist?
+    - app (main controller)
+        - registers on window hash change
+            - calls router processView on hash change
+        - observes the authentication and calls router if necessary
+
+    - view machinery
+        - wraps the router...?
+
+
 

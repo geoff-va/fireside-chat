@@ -8,11 +8,10 @@
 
 
   <script>
-    this.roomId = "-KqZegV50COjE_qkYkGw";
 
     send_message(e) {
       e.preventDefault();
-      var ref = firebase.database().ref('messages/' + this.roomId);
+      var ref = firebase.database().ref('messages/' + opts.roomid);
       var content = {
         message: this.refs.message.value,
         useremail: firebase.auth().currentUser.email,
