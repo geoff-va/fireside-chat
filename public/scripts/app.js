@@ -14,8 +14,17 @@
       router.processView(window.location.hash);
     });
 
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        history.pushState({}, null, "#/rooms")
+        router.processView('#/rooms');
+      } else {
+        router.processView('#/login');
+      }
+
+    });
+
     riot.mount('my-nav'); // always keep nav mounted
-    router.processView(window.location.hash);
 
   }());
 

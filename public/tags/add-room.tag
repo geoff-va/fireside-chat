@@ -43,6 +43,8 @@
               this.error = "Sorry, but " + self.refs.roomname.value + " already exists!";
             }
         });
+
+      window.location = "#/rooms";
     }
 
   </script>
