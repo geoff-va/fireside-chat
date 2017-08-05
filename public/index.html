@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Real Time Chat</title>
+    <title>Fireside Chat</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
   </head>
 
   <body>
@@ -11,13 +13,14 @@
     <script src="/__/firebase/4.2.0/firebase-auth.js"></script>
     <script src="/__/firebase/4.2.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js"></script>
-    
     <my-nav></my-nav>
-    <my-login id="my-login"></my-login>
-    <sign-up></sign-up>
-    <chat-rooms></chat-rooms>
-    <add-room></add-room>
-    <chat-room></chat-room>
+    <div class="main-content">
+      <my-login></my-login>
+      <sign-up></sign-up>
+      <chat-rooms></chat-rooms>
+      <add-room></add-room>
+      <chat-room></chat-room>
+    </div>
 
     <!--<script type="riot/tag" data-src="tags/chat-room.tag"></script>-->
     <script type="riot/tag" data-src="tags/my-nav.tag"></script>

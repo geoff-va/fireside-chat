@@ -1,21 +1,20 @@
 <my-nav>
-  <div>
-    <span>Real Time Chat</span>
+  <div class="header">
+    <span class="">{ title }</span>
     <span>{ useremail }</span>
     <span onclick={ logout } if={ useremail }>LogOut</span>
-    <hr>
   </div>
 
   <script>
-    var self = this;
+    this.title = 'Fireside Chat';
     this.useremail = '';
+    var self = this;
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        console.log(user);
-          self.useremail = user.email;
+        self.useremail = user.email;
       } else {
-          self.useremail = '';
+        self.useremail = '';
       }
     self.update();
 

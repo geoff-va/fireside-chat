@@ -1,17 +1,24 @@
 <my-login>
-  <form onsubmit="{ login }">
-    <div>
-      <label for="username">Username</label>
-      <input type="email" ref="username" name="username" placeholder="username"/>
-      <br>
-      <label for="password">Password</label>
-      <input type="password" ref="password" name="password" placeholder="password">
-      <br>
-      <span class="error">{ error }</span>
+  <div class="my-login">
+    <form onsubmit="{ login }">
+      <div class="input-group">
+        <label for="username">Username</label><br>
+        <input size="25" type="email" ref="username" name="username" placeholder="john@doe.com"/>
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label><br>
+        <input size="25" type="password" ref="password" name="password" placeholder="Password">
+        <span class="error">{ error }</span>
+      </div>
+      <div class="center">
+        <button class="button" type="submit">Login</button>
+      </div>
+    </form>
+    <div class="subtle-text center">
+      <span>Not a current user?&nbsp;</span><br>
+      <a href="/#/signup">Sign Up</a>
     </div>
-    <button type="submit">Login</button>
-  </form>
-  <a href="/#/signup">Sign Up</a>
+  </div>
 
   <script>
     /* login user with username and password */

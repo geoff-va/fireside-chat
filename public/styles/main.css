@@ -1,0 +1,66 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0px;
+}
+
+hr {
+  margin: 0px;
+}
+
+input {
+  font-size: 1em;
+}
+
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: blue;
+}
+
+.button {
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px 10px;
+  font-size: 1em;
+}
+
+a.button {
+  background-color: gray;
+  text-decoration: none;
+  color: black; 
+  cursor: default;
+}
+
+.main-content {
+  padding: 10px;
+}
+
+.header {
+  border-bottom: 1px solid black;
+  padding: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 0.75em;
+}
+
+.center {
+  text-align: center;
+}
+
+.input-group {
+  margin: 3px;
+}
+
+.subtle-text {
+  font-size: 0.75em;
+}
+
+.my-login {
+  margin: auto;
+  width: 220px;
+  padding: 50px;
+}
