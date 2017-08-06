@@ -16,16 +16,30 @@ input {
 a {
   text-decoration: none;
 }
+
 a:visited {
   color: blue;
 }
 
+h1 {
+  margin: 0px;
+}
+
 .button {
+  background-color: #746A5C;
   border: none;
   border-radius: 5px;
   margin: 5px;
   padding: 5px 10px;
   font-size: 1em;
+  color: #FFD59C;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  color: #746A5C;
+  background-color: #FFD59C;
+  cursor: default;
 }
 
 a.button {
@@ -80,6 +94,7 @@ a.button {
 
 .room-row:hover {
   background-color: #FFD59C;
+  cursor: default;
 }
 
 .room-table {
@@ -96,11 +111,69 @@ a.button {
   padding: 3px 5px 3px 0px;
 }
 
-.aligned-input {
-  display: inline-block;
-  float: left;
-}
-
 .inline {
   display: inline-block;
+}
+
+/* --------- Message Window ----------- */
+.messages-window {
+  position: fixed;
+  width: 100%;
+  top: 105px;
+  bottom: 55px;
+  right: 10px;
+  left: 10px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.message-table tr td {
+  padding: 5px 0px;
+}
+
+.message-user {
+  font-weight: bolder;
+  text-decoration: underline;
+  font-size: 0.8em;
+}
+
+/* --------- Message Bar -------------- */
+.message-bar {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 10px;
+  padding: 10px 5px;
+  box-shadow: 1px 1px 5px 2px #888888;
+  background-color: #f4f7f9;
+}
+
+.message-bar span.button {
+  margin-top: -1px;
+  padding: 3px 10px;
+  float:left;
+}
+
+.message-bar div.msg-text-box {
+  margin: 0px;
+  overflow: hidden;
+}
+
+.message-bar textarea  {
+  background-color: transparent;
+  border: none;
+  width: 99%;
+  resize: none;
+  font-size: 1em;
+}
+
+.message-bar textarea:focus {
+  outline: none;
+}
+
+.round-btn {
+  border: none;
+  border-radius: 50%;
+  padding: 0px 13px;
 }

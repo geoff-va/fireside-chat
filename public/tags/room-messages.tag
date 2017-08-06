@@ -1,9 +1,16 @@
 <room-messages>
-  <h3>Chatting in: { roomname }</h3>
-  <div>
-    <table>
+  <h1>
+    <span tooltip="Back to Rooms" onclick={ back } class="round-btn button"><</span>
+    Chatting in: { roomname }
+  </h1>
+  <div id="msgwindow" class="messages-window">
+    <table class="message-table">
       <tr each={ messages }>
-        <td>{ useremail } - { message }
+        <td>
+          <div>
+            <div class="message-user">{ useremail }</div>
+            <div class="message">{ message }</div>
+          </div>
         </td>
       </tr>
     </table>
@@ -14,7 +21,7 @@
     this.messages = [];
     this.roomname = '';
     var self = this;
-  
+
     // Retrieve room name
     var roomref = firebase.database().ref('rooms/' + opts.roomid);
     roomref.once('value', function(snap) {
@@ -29,7 +36,14 @@
       .on('child_added', function(snap) {
         self.messages.push(snap.val());
         self.update();
+        // TODO: This is probably occuring for each message and should happen
+        // once after all messages are loaded
+        // window.scrollTo(0, document.body.scrollHeight);
       });
+
+    back(e) {
+      window.location = "#/rooms";
+    }
   </script>
 
 </room-messages>
