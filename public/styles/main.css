@@ -43,6 +43,12 @@ h1 {
   cursor: default;
 }
 
+.button:disabled {
+  color: #aeaeaf;
+  background-color: #746A5C;
+  cursor: default;
+}
+
 .round-btn {
   border: none;
   border-radius: 50%;
