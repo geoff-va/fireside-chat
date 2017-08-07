@@ -1,6 +1,6 @@
 <room-messages>
   <h1>
-    <span tooltip="Back to Rooms" onclick={ back } class="round-btn button"><</span>
+    <span onclick={ back } class="round-btn button"><</span>
     Chatting in: { roomname }
   </h1>
   <div id="msgwindow" class="messages-window">
@@ -38,8 +38,20 @@
         self.update();
         // TODO: This is probably occuring for each message and should happen
         // once after all messages are loaded
-        // window.scrollTo(0, document.body.scrollHeight);
+        var msgwin = document.getElementById('msgwindow');
+        if (msgwin !== null) {
+          msgwin.scrollTop = msgwin.scrollHeight;
+        }
       });
+
+    // Necessary when coming back to the page
+    this.on('mount', function() {
+        var msgwin = document.getElementById('msgwindow');
+        if (msgwin !== null) {
+          console.log('mount');
+          msgwin.scrollTop = msgwin.scrollHeight;
+        }
+      })
 
     back(e) {
       window.location = "#/rooms";
