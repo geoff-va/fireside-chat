@@ -1,10 +1,12 @@
 <message-bar>
-  <div>
     <form onsubmit={ send_message }>
-      <input ref="message" size="50" type="text" placeholder="Message"/>
-      <button type="submit">Send</button>
+      <div class="message-bar">
+        <span class="button" onclick={ send_message }>Send</span>
+        <div class="msg-text-box">
+          <textarea rows="1" ref="message" placeholder="Message"/>
+        </div>
+      </div>
     </form>
-  </div>
 
 
   <script>

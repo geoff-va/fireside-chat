@@ -1,16 +1,20 @@
 <chat-rooms>
   <div>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th># Occupants</th>
-      </tr>
-      <tr onclick={ route } each={ val, id in rooms } id={ id }>
-        <td>{ val.name }</td>
-        <td>{ val.description }</td>
-        <td>{ val.members }</td>
-      </tr>
+    <table class="room-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th># Occupants</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="room-row" onclick={ route } each={ val, id in rooms } id={ id }>
+          <td>{ val.name }</td>
+          <td>{ val.description }</td>
+          <td>{ val.members }</td>
+        </tr>
+      </tbody>
     </table>
     <a href="#/rooms/create">Create Room</a>
   </div>
