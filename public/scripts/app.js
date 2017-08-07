@@ -11,15 +11,21 @@
 
     /* Watch for changes in the hash*/
     window.addEventListener('hashchange', function(e) {
-      router.processView(window.location.hash);
+      if (window.location.hash !== "#/signup" && !firebase.auth().currentUser) {
+        router.processView("#/login");
+        history.pushState({}, null, "#/login");
+      } else {
+        router.processView(window.location.hash);
+      }
     });
 
+    // Redirect user to login if they aren't auth'd
     firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        history.pushState({}, null, "#/rooms")
-        router.processView('#/rooms');
+      if (!user) {
+        router.processView("#/login");
+        history.pushState({}, null, "#/login");
       } else {
-        router.processView('#/login');
+        router.processView(window.location.hash);
       }
 
     });

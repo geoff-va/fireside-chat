@@ -1,5 +1,8 @@
 <add-room>
-  <h3>Create New Room</h3>
+  <h1>
+    <span onclick={ back } class="round-btn button"><</span>
+    Create New Room
+  </h1>
   <div class="inline">
     <form onsubmit={ create_room }>
       <div class"inline">
@@ -17,14 +20,13 @@
     </form>
   </div>
   <div>
-    <a class="subtle-text" onclick={ back } href='#/'>Back to Rooms</a>
   </div>
 
 
   <script>
     var self = this;
     back(e) {
-      history.back();
+      window.location = "#/rooms";
     }
 
     create_room(e) {
