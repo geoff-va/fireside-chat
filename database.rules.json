@@ -1,6 +1,23 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
-  }
+    ".write": "auth != null",
+    ".read" : "auth != null",
+    "messages": {
+      "$tableId": {  // for each table entry
+        "$messagId": {  // for each message entry
+          // Can only create new data; 
+          // Prevent user from using console to spoof a message using someone elses uid;
+          // Ensure proper structure
+          ".validate": "!data.exists() && newData.exists() && newData.child('userid').val() == auth.uid && newData.hasChildren(['timestamp', 'userid', 'displayname', 'message'])"
+        	}
+      	},
+      },
+    "rooms" : {
+      "$room": {
+        // Can only create new data, not edit it
+        // Enfore proper structure
+        ".validate": "!data.exists() && newData.exists() && newData.hasChildren(['name', 'description'])",  
+      }
+  	}
+	}
 }

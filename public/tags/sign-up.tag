@@ -33,7 +33,7 @@
     this.disable_submit = true;
     var self = this;
 
-    /* Resets all fields */
+    /* Clear input fields */
     function resetFields() {
       var refs = self.refs;
       refs.username.value = '';
@@ -43,13 +43,15 @@
       self.update();
     }
 
+    /* Clear error fields */
     function resetErrors() {
       self.username_errpr = '';
       self.pwd1_error = '';
       self.pwd2_error = '';
       self.displayname_error = '';
     }
-
+  
+    /* Set appropriate error field based on error code */
     function setError(error) {
       resetErrors();
       if (error.code === 'auth/email-already-in-use' || error.code === "auth/invalid-email") {

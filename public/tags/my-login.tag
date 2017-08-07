@@ -3,12 +3,12 @@
     <form onsubmit="{ login }">
       <div class="input-group">
         <label for="username">User Email</label><br>
-        <input class="center" size="25" type="email" ref="username" name="username" placeholder="john@doe.com"/>
+        <input class="center" size="25" type="email" ref="username" name="username" placeholder="john@doe.com" required/>
         <div class="error center">{ error }</div>
       </div>
       <div class="input-group">
         <label for="password">Password</label><br>
-        <input class="center" size="25" type="password" ref="password" name="password">
+        <input class="center" size="25" type="password" ref="password" name="password" required>
       </div>
       <div class="center">
         <button class="button" type="submit">Login</button>
