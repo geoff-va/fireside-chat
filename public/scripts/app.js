@@ -4,7 +4,7 @@
 
     /* View Routes */
     router.addRoute("^#/login$", 'tags/my-login.tag', 'my-login', rtcApp.routes.login);
-    //router.addRoute("^#/signup$", 'tags/sign-up.tag', 'sign-up');
+    router.addRoute("^#/signup$", 'tags/sign-up.tag', 'sign-up', rtcApp.routes.signup);
     //router.addRoute("^#/rooms$", 'tags/chat-rooms.tag', 'chat-rooms');
     //router.addRoute("^#/rooms/create", 'tags/add-room.tag', 'add-room');
     //router.addRoute("^#/room/([a-zA-Z0-9._-]+)$", 'tags/chat-room.tag', 'chat-room');

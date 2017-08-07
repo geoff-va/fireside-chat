@@ -30,9 +30,51 @@
       return {auth: auth};
     }
 
+    /* Sign up a new user */
+    var signup = function() {
+      var obs = riot.observable();
+
+      obs.on('signup', (data) => {
+        firebase.auth()
+        .createUserWithEmailAndPassword(data.useremail, data.password)
+        .then((user) => {
+          // Add display name to user profile
+          user.updateProfile({
+            displayName: data.displayname,
+            photoURL: ''
+          });
+
+          // Go to next view
+          obs.trigger('success', {nextView: "#/rooms"} );
+        })
+        .catch((error) => {
+          var useremail_error = '';
+          var pwd1_error = '';
+
+          // Organize errors
+          if (error.code === 'auth/email-already-in-use') {
+            useremail_error = "The email address '" + data.useremail +
+              "' is already in use by another account.";
+          } else if (error.code === "auth/invalid-email") {
+            useremail_error = error.message;
+          } else if (error.code === 'auth/weak-password') {
+            pwd1_error = error.message;
+          }
+
+          // Send Error back to view
+          obs.trigger('error', {
+            useremail_error: useremail_error,
+            pwd1_error: pwd1_error
+          });
+        });
+      });
+      return {obs: obs};
+    }
+
     // Expose these functions
     return {
-      login: login
+      login: login,
+      signup: signup
     }
 
   })();

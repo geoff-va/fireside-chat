@@ -43,12 +43,13 @@
       auth.trigger('login', payload);
     }
 
-    /* Handle any errors that come back from login */
-    auth.on('error', function(data) {
+    /* Display errors returned by login */
+    auth.on('error', (data) => {
       self.error = data;
       self.update();
     });
 
+    /* Go to next view on success */
     auth.on('success', (params) => {
       window.location = params.nextView;
     });
