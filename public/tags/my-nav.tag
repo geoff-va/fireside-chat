@@ -1,8 +1,13 @@
 <my-nav>
   <div class="header">
-    <span class="">{ title }</span>
-    <span>{ useremail }</span>
-    <span onclick={ logout } if={ useremail }>LogOut</span>
+    <div class="brand">
+      <img src="images/fire.png" height="50px" width="50px">
+    </div>
+      <h1 class="brand-title">{ title }</h1>
+    <div class="user-details">
+      <span>Welcome, { useremail }</span>
+      <span class="button" onclick={ logout } if={ useremail }>Log Out</span>
+    </div>
   </div>
 
   <script>
