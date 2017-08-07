@@ -14,12 +14,17 @@
     send_message(e) {
       e.preventDefault();
       var ref = firebase.database().ref('messages/' + opts.roomid);
+      var user = firebase.auth().currentUser;
       var content = {
         message: this.refs.message.value,
-        displayname: firebase.auth().currentUser.displayName,
-        timestamp: Date.now()
+        displayname: user.displayName,
+        timestamp: Date.now(),
+        userid: user.uid
       };
-      ref.push(content);
+
+      ref.push(content).catch(function(error) {
+        console.log(error);
+      });
       this.refs.message.value = '';
     }
     </script>
