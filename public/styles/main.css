@@ -116,6 +116,7 @@ h1 {
 .room-row:hover {
   background-color: #FFD59C;
   cursor: default;
+  transition: background-color 0.3s ease;
 }
 
 .room-table {
@@ -171,13 +172,12 @@ h1 {
 }
 
 .message-bar span.button {
-  margin-top: -1px;
   padding: 3px 10px;
   float:left;
 }
 
 .message-bar div.msg-text-box {
-  margin: 0px;
+  padding: 8px 0px 0px 0px;
   overflow: hidden;
 }
 
