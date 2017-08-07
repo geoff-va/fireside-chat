@@ -8,7 +8,7 @@
       <tr each={ messages }>
         <td>
           <div>
-            <div class="message-user">{ useremail }</div>
+            <div class="message-user">{ displayname }</div>
             <div class="message">{ message }</div>
           </div>
         </td>
