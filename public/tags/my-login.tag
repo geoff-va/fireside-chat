@@ -25,15 +25,16 @@
     var self = this;
     var refs = this.refs;
 
-    /* ------ Local Functions -------- */
+    /* --------- Local Functions --------- */
     /* Reset the input fields */
     function resetFields() {
       self.refs.username.value = '';
       self.refs.password.value = '';
       self.update();
+      self.refs.username.select();
     }
 
-    /* ------------ Interface ---------- */
+    /* ----------- Interface ------------- */
     /* login user with username and password */
     login(e) {
       e.preventDefault();
@@ -47,7 +48,7 @@
     /* Display errors returned by login */
     auth.on('error', (data) => {
       self.error = data;
-      self.update();
+      resetFields();
     });
 
     /* Go to next view on success */

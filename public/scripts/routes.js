@@ -1,7 +1,21 @@
 ;(function(riot, firebase, rtcApp) {
   var routes = rtcApp.routes = rtcApp.routes || (function() {
 
-    /* Login view function */
+    /* Returns string of dateTime in MM/DD/YY HH:MM:SS format */
+    function formatDateTime(dateTime) {
+      let month = ("0" + dateTime.getMonth().toString()).slice(-2);
+      let day = ("0" + dateTime.getDate().toString()).slice(-2);
+      let year = dateTime.getFullYear().toString().slice(-2);
+      let hour = ("0" + dateTime.getHours().toString()).slice(-2);
+      let minutes = ("0" + dateTime.getMinutes().toString()).slice(-2);
+      let seconds = ("0" + dateTime.getSeconds().toString()).slice(-2);
+      let stamp = month+"/"+day+"/"+year+" "+hour+":"+minutes+":"+seconds;
+
+      return stamp;
+    }
+
+    /* ---------------------------------- */
+    /* Login View - Login an existing user */
     var login = function(urlParams) {
       var auth = riot.observable();
 
@@ -9,16 +23,13 @@
         firebase.auth().
         signInWithEmailAndPassword(params.username, params.password)
           .then(() => {
-            console.log("Successful Login for: " + params.username);
             auth.trigger('success', {nextView: "#/rooms"});
           })
           .catch((error) => {
             // Interpret error and return to view
             var msg = '';
-            if (error.code === "auth/user-not-found") {
-              msg = "User with email " + params.username +
-                " cannot be found.";
-            } else if (error.code === "auth/wrong-password") {
+            if (error.code === "auth/wrong-password" ||
+                error.code === "auth/user-not-found") {
               msg = "Incorrect username or password.";
             } else {
               msg = error.message;
@@ -30,7 +41,8 @@
       return {auth: auth};
     }
 
-    /* Sign up a new user */
+    /* ---------------------------------- */
+    /* Sign Up View - Sign up a new user */
     var signup = function(urlParams) {
       var obs = riot.observable();
 
@@ -71,7 +83,8 @@
       return {obs: obs};
     }
 
-    /* Chat room interface - load messages/send message */
+    /* ---------------------------------- */
+    /* Chat Room View - Load chat messages and send them */
     var chatRoom = function(urlParams) {
       var obs = riot.observable();
       var roomid = urlParams[1];
@@ -86,14 +99,31 @@
       }
 
       // Pass messages into the room
-      // TODO: Limit to most recent XX messages
       var msgref = firebase.database().ref('messages/' + roomid);
-      obs.getMessages = function() {
-        msgref.orderByChild('timestamp')
+      obs.getMessages = function(limit) {
+        msgref.orderByKey().limitToLast(limit)
           .on('child_added', (snap) => {
-            obs.trigger('newMessage', snap.val());
+            var message = snap.val();
+            var d = new Date(message.timestamp);
+            message.timestamp = formatDateTime(d);
+            message['roomKey'] = snap.key;
+
+            obs.trigger('newMessage', message);
           });
       }
+
+      /* Send more messagse in as they are requested */
+      obs.on('requestMore', (data) => {
+        msgref.orderByKey().endAt(data.end).limitToLast(data.quantity)
+          .on('child_added', (snap) => {
+            var message = snap.val();
+            var d = new Date(message.timestamp);
+            message.timestamp = formatDateTime(d);
+            message['roomKey'] = snap.key;
+
+            obs.trigger('addOlderMessage', message);
+          });
+      });
 
       // Upload a message sent from chat
       obs.on("send", (payload) => {
@@ -108,6 +138,8 @@
       return {obs: obs};
     }
 
+    /* ---------------------------------- */
+    /* Chat Rooms View - lists available chat rooms */
     var chatRooms = function(urlParams) {
       var obs = riot.observable();
       var ref = firebase.database().ref('rooms');
@@ -116,7 +148,6 @@
       obs.addRoom = function() {
         ref.orderByChild('name')
           .on('child_added', function(snap) {
-            console.log("child_added right before trigger");
             obs.trigger('addRoom', {id: snap.key, value: snap.val()});
         });
       }
@@ -140,6 +171,8 @@
       return {obs: obs};
     }
 
+    /* ---------------------------------- */
+    /* Add Room View - Allows auth'd user to create a new chat room */
     var addRoom = function(urlParams) {
       var obs = riot.observable();
       var ref = firebase.database().ref('rooms');

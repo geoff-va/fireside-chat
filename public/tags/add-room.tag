@@ -26,11 +26,13 @@
   <script>
     var obs = opts.interface.obs;
     
-    /* ------ View Logic --------- */
+    /* --------- Local Functions --------- */
+    /* Round back button */
     back(e) {
       window.location = "#/rooms";
     }
-    
+
+    /* ----------- Interface ------------- */
     /* Create new room */
     create_room(e) {
       e.preventDefault();
@@ -41,12 +43,13 @@
       obs.trigger('addRoom', content);
     }
 
-    /* ------- Interface Logic -------- */
+    /* Update for error conditions */
     obs.on('error', (error) => {
       this.error = error;
       this.update();
     });
 
+    /* No Error, go to nextView */
     obs.on('success', (params) => {
       window.location = params.nextView;
     });

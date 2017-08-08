@@ -5,27 +5,27 @@
     </div>
       <h1 class="brand-title">{ title }</h1>
     <div class="user-details">
-      <span>{ username }</span>
-      <span class="button" onclick={ logout } if={ username }>Log Out</span>
+      <span class="welcome">{ welcomeMsg }</span>
+      <span class="button logout" onclick={ logout } if={ welcomeMsg }>Log Out</span>
     </div>
   </div>
 
   <script>
     this.title = 'Fireside Chat';
-    this.welcomeMsg = "Welcome, "
-    this.username = '';
+    this.welcomeMsg = '';
     var self = this;
 
+    // Update header based on user
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        self.username = self.welcomeMsg + user.email;
+        self.welcomeMsg = "Welcome, " + user.displayName;
       } else {
-        self.username = '';
+        self.welcomeMsg = '';
       }
     self.update();
-
     });
 
+    // logout currently logged in user
     logout(e) {
       firebase.auth().signOut().then(function() {
         console.log("User Signed Out");

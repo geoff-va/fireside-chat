@@ -1,39 +1,57 @@
 <chat-rooms>
   <div>
+    <h1><span onclick={ createRoom } class="round-btn button">+</span>
+      Chat Rooms</h1>
     <table class="room-table">
       <thead>
         <tr>
           <th>Name</th>
           <th>Description</th>
-          <th># Occupants</th>
         </tr>
       </thead>
       <tbody>
         <tr class="room-row" onclick={ route } each={ val, id in rooms } id={ id }>
           <td>{ val.name }</td>
           <td>{ val.description }</td>
-          <td>{ val.members }</td>
         </tr>
       </tbody>
     </table>
-    <a href="#/rooms/create">Create Room</a>
+    <h3 class="empty-rooms" if={ !lastRoom }>{ emptyMsg }</h3>
   </div>
 
   <script>
     self = this;
     self.rooms = {};
+    self.lastRoom = '';
+    self.emptyMsg = '';
     var obs = opts.interface.obs;
 
-    /* ---------- View Logic --------- */
+    /* --------- Local Functions --------- */
+    /* Link to create a new room */
+    createRoom(e) {
+      window.location = "#/rooms/create";
+    }
+
+    /* User clicked on a table row, take them to the room */
     route(e) {
       var room = e.target.parentElement.getAttribute('id');
       window.location = "#/room/" + room;
     }
+    
+    /* If no rooms exist, display msg to user to add one */
+    this.one('mount', () => {
+      // w/o this timeout, it flashes the error msg before objects load
+      // A bit hacky, but works (unless server was really slow :\)
+      setTimeout(() => {
+        self.emptyMsg = 'No Rooms Exist! Click the + to Create One!';
+        self.update();
+      }, 1500)
+    });
 
-    /* -------- Interface Logic --------- */
+    /* ----------- Interface ------------- */
     /* Subscribe to room additions */
     obs.on('addRoom', (room) => {
-      console.log("adding room from .tag: " + room.value.name)
+      self.lastRoom = room;
       self.rooms[room.id] = room.value;
       self.update();
     });
@@ -41,6 +59,10 @@
     /* Subscribe to removals of rooms */
     obs.on('deleteRoom', (room) => {
       delete self.rooms[room.id];
+      // Redisplay empty list msg if they have all been deleted
+      if (Object.keys(self.rooms).length === 0) {
+        self.lastRoom = null;
+      }
       self.update();
     });
 
@@ -54,7 +76,6 @@
     obs.addRoom();
     obs.deleteRoom();
     obs.changeRoom();
-
 
   </script>
 
