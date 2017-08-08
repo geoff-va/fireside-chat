@@ -2,7 +2,7 @@
   var routes = rtcApp.routes = rtcApp.routes || (function() {
 
     /* Login view function */
-    var login = function() {
+    var login = function(urlParams) {
       var auth = riot.observable();
 
       auth.on('login', (params) => {
@@ -31,7 +31,7 @@
     }
 
     /* Sign up a new user */
-    var signup = function() {
+    var signup = function(urlParams) {
       var obs = riot.observable();
 
       obs.on('signup', (data) => {
@@ -71,10 +71,36 @@
       return {obs: obs};
     }
 
+    /* Load messages into a chat room */
+    var chatRoom = function(urlParams) {
+      var obs = riot.observable();
+      var roomid = urlParams[1];
+      var roomref = firebase.database().ref('rooms/' + roomid);
+
+      // Get the name of the room
+      roomref.once('value', (snap) => {
+        var roomname = snap.val().name;
+        obs.trigger('roomname', roomname);
+      });
+
+      // Send the room name to the room
+
+      // Pass messages into the room
+      // TODO: Limit to most recent XX messages
+      var msgref = firebase.database().ref('messages/' + roomid);
+      msgref.orderByChild('timestamp')
+        .on('child_added', (snap) => {
+          obs.trigger('newMessage', snap.val());
+        });
+
+      return {obs: obs};
+    }
+
     // Expose these functions
     return {
       login: login,
-      signup: signup
+      signup: signup,
+      chatRoom: chatRoom
     }
 
   })();

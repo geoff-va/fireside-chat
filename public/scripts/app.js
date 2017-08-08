@@ -7,7 +7,7 @@
     router.addRoute("^#/signup$", 'tags/sign-up.tag', 'sign-up', rtcApp.routes.signup);
     //router.addRoute("^#/rooms$", 'tags/chat-rooms.tag', 'chat-rooms');
     //router.addRoute("^#/rooms/create", 'tags/add-room.tag', 'add-room');
-    //router.addRoute("^#/room/([a-zA-Z0-9._-]+)$", 'tags/chat-room.tag', 'chat-room');
+    router.addRoute("^#/room/([a-zA-Z0-9._-]+)$", 'tags/chat-room.tag', 'chat-room', rtcApp.routes.chatRoom);
 
     /* Watch for changes in the hash*/
     window.addEventListener('hashchange', function(e) {

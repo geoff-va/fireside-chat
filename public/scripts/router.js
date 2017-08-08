@@ -33,7 +33,7 @@
         route = routes[i]
         urlParams = parseUrl(route.regex, url)
         if (urlParams) {
-          options = route.cb();
+          options = route.cb(urlParams);
 
           // Maybe all riot rendering should be done somewhere else ...
           riot.compile(route.location, function() {
