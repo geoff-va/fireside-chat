@@ -1,6 +1,6 @@
 <room-messages>
   <h1><span onclick={ back } class="round-btn button"><</span>{ roomname }</h1>
-  <div id="msgwindow" class="messages-window">
+  <div ref="msgwindow" id="msgwindow" class="messages-window">
     <table class="message-table">
       <tr each={ messages }>
         <td>

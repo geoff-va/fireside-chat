@@ -93,10 +93,8 @@
           .on('child_added', (snap) => {
             var message = snap.val();
             var d = new Date(message.timestamp);
-            console.log(d);
             message.timestamp = d.getMonth()+1+"/"+d.getDate()+"/"+d.getFullYear()+" " +
               d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
-            console.log(message.timestamp);
 
             obs.trigger('newMessage', message);
           });
