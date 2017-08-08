@@ -227,3 +227,9 @@ h1 {
   outline: none;
 }
 
+/* When screen gets small, welcome message can overflow */
+@media (max-width: 650px) {
+  .welcome {
+    display: none;
+  }
+}

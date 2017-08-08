@@ -18,7 +18,7 @@
     // Update header based on user
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        self.welcomeMsg = "Welcome, " + user.email;
+        self.welcomeMsg = "Welcome, " + user.displayName;
       } else {
         self.welcomeMsg = '';
       }
