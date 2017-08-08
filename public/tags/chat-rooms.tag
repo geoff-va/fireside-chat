@@ -23,17 +23,19 @@
     self.rooms = {};
     var obs = opts.interface.obs;
 
-    /* ---------- View Logic --------- */
+    /* --------- Local Functions --------- */
+    /* Link to create a new room */
     createRoom(e) {
       window.location = "#/rooms/create";
     }
 
+    /* User clicked on a table row, take them to the room */
     route(e) {
       var room = e.target.parentElement.getAttribute('id');
       window.location = "#/room/" + room;
     }
 
-    /* -------- Interface Logic --------- */
+    /* ----------- Interface ------------- */
     /* Subscribe to room additions */
     obs.on('addRoom', (room) => {
       self.rooms[room.id] = room.value;
@@ -56,7 +58,6 @@
     obs.addRoom();
     obs.deleteRoom();
     obs.changeRoom();
-
 
   </script>
 

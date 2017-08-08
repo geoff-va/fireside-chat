@@ -33,8 +33,8 @@
     var self = this;
     var obs = opts.interface.obs;
   
-    /* -------- View Logic ----------- */
-    /* Clear input fields */
+    /* --------- Local Functions --------- */
+    /* Clear appropriate input fields based on error presence */
     function resetFields(names, passwords) {
       var refs = self.refs;
       if (names) {
@@ -72,7 +72,7 @@
       }
     }
 
-    /* ------------ Interface Logic ------------ */
+    /* ----------- Interface ------------- */
     /* Create user with username and password */
     signup(e) {
       e.preventDefault();

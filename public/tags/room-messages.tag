@@ -23,36 +23,19 @@
     var self = this;
     var lastKey = null;
     var numFetched = 0;
-    var numToFetch = 5;
-    var fetchWaitTime = 1000;
+    var numToFetch = 10;
+    var fetchWaitTime = 1000;  //ms between fetching older messages
     var waitToFetch = false;
     // because it's a nested tag, get opts from parent
     var obs = this.parent.opts.interface.obs;
 
-    /* ---------- View Logic ----------- */
+    /* --------- Local Functions --------- */
     function scrollToBottom(elId) {
       var msgwin = document.getElementById(elId);
       if (msgwin !== null) {
         msgwin.scrollTop = msgwin.scrollHeight;
       }
     }
-
-    // Scrolls to bottom after loading data
-    this.on('mount', function() {
-      scrollToBottom("msgwindow");
-    });
-
-    /* Round back button */
-    back(e) {
-      window.location = "#/rooms";
-    }
-
-    /* -------- Interface Logic ------------ */
-    /* Load the Room Name */
-    obs.one('roomname', (name) => {
-      self.roomname = name;
-      self.update();
-    });
 
     /* Fetches additional data as user hits top of scroll bar 
       - Sets timeout preventing additional fetching, so we don't try
@@ -73,18 +56,34 @@
             waitToFetch=false;
             self.refs.loading.classList.remove('show-loading');
           }, fetchWaitTime);
-        } 
+        }
       }
     }
 
-    /* Load messages as they come in and scroll to bottom of window */
+    // Scrolls to bottom after loading data
+    this.on('mount', function() {
+      scrollToBottom("msgwindow");
+    });
+
+    /* Round back button */
+    back(e) {
+      window.location = "#/rooms";
+    }
+
+    /* ----------- Interface ------------- */
+    /* Load the Room Name */
+    obs.one('roomname', (name) => {
+      self.roomname = name;
+      self.update();
+    });
+
+    /* Load new messages as they come in and scroll to bottom of window */
     obs.on('newMessage', (message) => {
       self.messages.push(message);
       self.update();
       scrollToBottom("msgwindow");
     });
 
-    
     /* Loads older messages into the chat window */
     obs.on('addOlderMessage', (message) => {
       /* Since data comes in from firebase always in ascending order,
@@ -103,7 +102,7 @@
     // Run Observers
     obs.getRoomName();
     obs.getMessages(10);
-  
+
   </script>
 
 </room-messages>

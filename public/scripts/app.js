@@ -1,3 +1,4 @@
+/* Main Application entry point */
 ;(function(window, document, firebase, riot, rtcApp) {
   var app = rtcApp.app = rtcApp.app || (function() {
     var router = rtcApp.router;
