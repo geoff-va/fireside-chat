@@ -36,7 +36,6 @@
     /* -------- Interface Logic --------- */
     /* Subscribe to room additions */
     obs.on('addRoom', (room) => {
-      console.log("adding room from .tag: " + room.value.name)
       self.rooms[room.id] = room.value;
       self.update();
     });
