@@ -71,19 +71,17 @@
       return {obs: obs};
     }
 
-    /* Load messages into a chat room */
+    /* Chat room interface - load messages/send message */
     var chatRoom = function(urlParams) {
       var obs = riot.observable();
       var roomid = urlParams[1];
       var roomref = firebase.database().ref('rooms/' + roomid);
 
-      // Get the name of the room
+      // Get room name and pass it to the room
       roomref.once('value', (snap) => {
         var roomname = snap.val().name;
         obs.trigger('roomname', roomname);
       });
-
-      // Send the room name to the room
 
       // Pass messages into the room
       // TODO: Limit to most recent XX messages
@@ -92,6 +90,16 @@
         .on('child_added', (snap) => {
           obs.trigger('newMessage', snap.val());
         });
+
+      // Upload a message sent from chat
+      obs.on("send", (payload) => {
+        var user = firebase.auth().currentUser;
+        payload['displayname'] = user.displayName;
+        payload['userid'] = user.uid;
+        msgref.push(payload).catch((error) => {
+          console.log(error);
+        });
+      });
 
       return {obs: obs};
     }
