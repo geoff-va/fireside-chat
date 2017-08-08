@@ -91,7 +91,14 @@
       obs.getMessages = function() {
         msgref.orderByChild('timestamp')
           .on('child_added', (snap) => {
-            obs.trigger('newMessage', snap.val());
+            var message = snap.val();
+            var d = new Date(message.timestamp);
+            console.log(d);
+            message.timestamp = d.getMonth()+1+"/"+d.getDate()+"/"+d.getFullYear()+" " +
+              d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+            console.log(message.timestamp);
+
+            obs.trigger('newMessage', message);
           });
       }
 
@@ -117,7 +124,8 @@
         ref.orderByChild('name')
           .on('child_added', function(snap) {
             console.log("child_added right before trigger");
-            obs.trigger('addRoom', {id: snap.key, value: snap.val()});
+
+            obs.trigger('addRoom', {id: snap.key, value: message});
         });
       }
 

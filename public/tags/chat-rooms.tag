@@ -1,22 +1,21 @@
 <chat-rooms>
   <div>
+    <h1><span onclick={ createRoom } class="round-btn button">+</span>
+      Chat Rooms</h1>
     <table class="room-table">
       <thead>
         <tr>
           <th>Name</th>
           <th>Description</th>
-          <th># Occupants</th>
         </tr>
       </thead>
       <tbody>
         <tr class="room-row" onclick={ route } each={ val, id in rooms } id={ id }>
           <td>{ val.name }</td>
           <td>{ val.description }</td>
-          <td>{ val.members }</td>
         </tr>
       </tbody>
     </table>
-    <a href="#/rooms/create">Create Room</a>
   </div>
 
   <script>
@@ -25,6 +24,10 @@
     var obs = opts.interface.obs;
 
     /* ---------- View Logic --------- */
+    createRoom(e) {
+      window.location = "#/rooms/create";
+    }
+
     route(e) {
       var room = e.target.parentElement.getAttribute('id');
       window.location = "#/room/" + room;

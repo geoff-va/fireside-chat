@@ -1,14 +1,11 @@
 <room-messages>
-  <h1>
-    <span onclick={ back } class="round-btn button"><</span>
-    Chatting in: { roomname }
-  </h1>
+  <h1><span onclick={ back } class="round-btn button"><</span>{ roomname }</h1>
   <div id="msgwindow" class="messages-window">
     <table class="message-table">
       <tr each={ messages }>
         <td>
           <div>
-            <div class="message-user">{ displayname }</div>
+            <div class="message-user">{ displayname } - { timestamp }</div>
             <div class="message">{ message }</div>
           </div>
         </td>
