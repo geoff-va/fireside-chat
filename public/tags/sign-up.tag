@@ -35,12 +35,19 @@
   
     /* -------- View Logic ----------- */
     /* Clear input fields */
-    function resetFields() {
+    function resetFields(names, passwords) {
       var refs = self.refs;
-      refs.useremail.value = '';
-      refs.displayname.value = '';
-      refs.password1.value = '';
-      refs.password2.value = '';
+      if (names) {
+        refs.useremail.value = '';
+        refs.displayname.value = '';
+        refs.password1.value = '';
+        refs.password2.value = '';
+        refs.useremail.select();
+      } else if (passwords) {
+        refs.password1.value = '';
+        refs.password2.value = '';
+        refs.password1.select();
+      }
     }
 
     /* Disable submit if passwords don't match */
@@ -80,7 +87,7 @@
 
     /* Display errors returned by signup */
     obs.on('error', (error) => {
-      resetFields();
+      resetFields(error.useremail_error, error.pwd1_error);
       self.useremail_error = error.useremail_error;
       self.pwd1_error = error.pwd1_error;
       self.update();
