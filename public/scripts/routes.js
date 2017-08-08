@@ -123,9 +123,7 @@
       obs.addRoom = function() {
         ref.orderByChild('name')
           .on('child_added', function(snap) {
-            console.log("child_added right before trigger");
-
-            obs.trigger('addRoom', {id: snap.key, value: message});
+            obs.trigger('addRoom', {id: snap.key, value: snap.val()});
         });
       }
 
