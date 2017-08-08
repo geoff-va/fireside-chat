@@ -10,14 +10,16 @@
           // Ensure proper structure
           ".validate": "!data.exists() && newData.exists() && newData.child('userid').val() == auth.uid && newData.hasChildren(['timestamp', 'userid', 'displayname', 'message'])"
         	}
-      	},
+      	}
       },
     "rooms" : {
       "$room": {
         // Can only create new data, not edit it
         // Enfore proper structure
-        ".validate": "!data.exists() && newData.exists() && newData.hasChildren(['name', 'description'])",  
+        ".validate": "!data.exists() && newData.exists() && newData.hasChildren(['name', 'description'])"
       }
   	}
 	}
 }
+
+
