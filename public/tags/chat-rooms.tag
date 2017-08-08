@@ -22,33 +22,39 @@
   <script>
     self = this;
     self.rooms = {};
-    var ref = firebase.database().ref('rooms');
+    var obs = opts.interface.obs;
 
-    /* Subscribe to room additions */
-    ref.orderByChild('name')
-      .on('child_added', function(snap) {
-        self.rooms[snap.key] = snap.val();
-        self.update();
-      });
-
-    /* Subscribe to removals of rooms */
-    ref.orderByChild('name')
-      .on('child_removed', function(snap) {
-        delete self.rooms[snap.key];
-        self.update();
-      });
-
-    /* Subscribe to changes in room details */
-    ref.orderByChild('name')
-      .on('child_changed', function(snap) {
-        self.rooms[snap.key] = snap.val();
-        self.update();
-      });
-  
+    /* ---------- View Logic --------- */
     route(e) {
       var room = e.target.parentElement.getAttribute('id');
       window.location = "#/room/" + room;
     }
+
+    /* -------- Interface Logic --------- */
+    /* Subscribe to room additions */
+    obs.on('addRoom', (room) => {
+      console.log("adding room from .tag: " + room.value.name)
+      self.rooms[room.id] = room.value;
+      self.update();
+    });
+
+    /* Subscribe to removals of rooms */
+    obs.on('deleteRoom', (room) => {
+      delete self.rooms[room.id];
+      self.update();
+    });
+
+    /* Subscribe to changes in room details */
+    obs.on('changeRoom', (room) => {
+        self.rooms[room.id] = room.value;
+        self.update();
+      });
+
+    // Run Observers
+    obs.addRoom();
+    obs.deleteRoom();
+    obs.changeRoom();
+
 
   </script>
 

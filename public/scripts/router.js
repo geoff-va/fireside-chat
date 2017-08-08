@@ -24,8 +24,17 @@
       routes.push({regex: regex, location: location, name: name, cb: cb});
     }
 
+    /* Remove currently active tag (view) */
+    var removeCurrentTag = function() {
+      if (currentTag !== null) {
+        currentTag.unmount(true);
+        currentTag = null;
+      }
+    }
+
     /* Checks routes[] for regex match against `url` and executes callback */
     var processView = function(url) {
+      removeCurrentTag();
       var route = null;
 
       // Find if any routes regex match url
@@ -35,9 +44,9 @@
         if (urlParams) {
           options = route.cb(urlParams);
 
-          // Maybe all riot rendering should be done somewhere else ...
+          // TODO: All rendering could be broken out somewhere else?
           riot.compile(route.location, function() {
-            currentTag = riot.mount(route.name, {urlParams: urlParams, interface: options});
+            currentTag = riot.mount(route.name, {urlParams: urlParams, interface: options})[0];
           });
           return;
         }
@@ -64,7 +73,9 @@
       addRoute: addRoute,
       processView: processView,
       parseUrl: parseUrl,
-      routes: routes
+      routes: routes,
+      currentTag: currentTag
+
     };
 
   }());

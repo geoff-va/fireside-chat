@@ -56,6 +56,10 @@
       scrollToBottom("msgwindow");
     });
   
+    // Run Observers
+    obs.getRoomName();
+    obs.getMessages();
+  
   </script>
 
 </room-messages>

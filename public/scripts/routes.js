@@ -78,18 +78,22 @@
       var roomref = firebase.database().ref('rooms/' + roomid);
 
       // Get room name and pass it to the room
-      roomref.once('value', (snap) => {
-        var roomname = snap.val().name;
-        obs.trigger('roomname', roomname);
-      });
+      obs.getRoomName = function() {
+        roomref.once('value', (snap) => {
+          var roomname = snap.val().name;
+          obs.trigger('roomname', roomname);
+        });
+      }
 
       // Pass messages into the room
       // TODO: Limit to most recent XX messages
       var msgref = firebase.database().ref('messages/' + roomid);
-      msgref.orderByChild('timestamp')
-        .on('child_added', (snap) => {
-          obs.trigger('newMessage', snap.val());
-        });
+      obs.getMessages = function() {
+        msgref.orderByChild('timestamp')
+          .on('child_added', (snap) => {
+            obs.trigger('newMessage', snap.val());
+          });
+      }
 
       // Upload a message sent from chat
       obs.on("send", (payload) => {
@@ -104,11 +108,44 @@
       return {obs: obs};
     }
 
+    var chatRooms = function(urlParams) {
+      var obs = riot.observable();
+      var ref = firebase.database().ref('rooms');
+
+      /* Subscribe to room additions */
+      obs.addRoom = function() {
+        ref.orderByChild('name')
+          .on('child_added', function(snap) {
+            console.log("child_added right before trigger");
+            obs.trigger('addRoom', {id: snap.key, value: snap.val()});
+        });
+      }
+
+      /* Subscribe to removals of rooms */
+      obs.deleteRoom = function() {
+        ref.orderByChild('name')
+          .on('child_removed', function(snap) {
+            obs.trigger('deleteRoom', {id: snap.key, value: snap.val()});
+        });
+      }
+
+      /* Subscribe to changes in room details */
+      obs.changeRoom = function() {
+        ref.orderByChild('name')
+          .on('child_changed', function(snap) {
+            obs.trigger('changeRoom', {id: snap.key, value: snap.val()});
+        });
+      }
+
+      return {obs: obs};
+    }
+
     // Expose these functions
     return {
       login: login,
       signup: signup,
-      chatRoom: chatRoom
+      chatRoom: chatRoom,
+      chatRooms: chatRooms
     }
 
   })();
