@@ -1,6 +1,7 @@
 ;(function(riot, firebase, rtcApp) {
   var routes = rtcApp.routes = rtcApp.routes || (function() {
 
+    /* Returns string of dateTime in MM/DD/YY HH:MM:SS format */
     function formatDateTime(dateTime) {
       let month = ("0" + dateTime.getMonth().toString()).slice(-2);
       let day = ("0" + dateTime.getDate().toString()).slice(-2);
@@ -13,7 +14,8 @@
       return stamp;
     }
 
-    /* Login view function */
+    /* ---------------------------------- */
+    /* Login View - Login an existing user */
     var login = function(urlParams) {
       var auth = riot.observable();
 
@@ -21,7 +23,6 @@
         firebase.auth().
         signInWithEmailAndPassword(params.username, params.password)
           .then(() => {
-            console.log("Successful Login for: " + params.username);
             auth.trigger('success', {nextView: "#/rooms"});
           })
           .catch((error) => {
@@ -40,7 +41,8 @@
       return {auth: auth};
     }
 
-    /* Sign up a new user */
+    /* ---------------------------------- */
+    /* Sign Up View - Sign up a new user */
     var signup = function(urlParams) {
       var obs = riot.observable();
 
@@ -81,7 +83,8 @@
       return {obs: obs};
     }
 
-    /* Chat room interface - load messages/send message */
+    /* ---------------------------------- */
+    /* Chat Room View - Load chat messages and send them */
     var chatRoom = function(urlParams) {
       var obs = riot.observable();
       var roomid = urlParams[1];
@@ -135,6 +138,8 @@
       return {obs: obs};
     }
 
+    /* ---------------------------------- */
+    /* Chat Rooms View - lists available chat rooms */
     var chatRooms = function(urlParams) {
       var obs = riot.observable();
       var ref = firebase.database().ref('rooms');
@@ -166,6 +171,8 @@
       return {obs: obs};
     }
 
+    /* ---------------------------------- */
+    /* Add Room View - Allows auth'd user to create a new chat room */
     var addRoom = function(urlParams) {
       var obs = riot.observable();
       var ref = firebase.database().ref('rooms');

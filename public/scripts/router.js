@@ -10,7 +10,7 @@
       defaultRoute = {regex: regex, location: location, name: name, cb: cb};
     }
 
-    /* Add a regex to `routes` */
+    /* Add a route to 'routes' array for future use */
     var addRoute = function(regex, location, name, cb) {
       // Replace route if it already exists in routes array
       for (i=0; i<routes.length; i++) {
@@ -24,7 +24,7 @@
       routes.push({regex: regex, location: location, name: name, cb: cb});
     }
 
-    /* Remove currently active tag (view) */
+    /* UnMount `currentTag` to make room for next View */
     var removeCurrentTag = function() {
       if (currentTag !== null) {
         currentTag.unmount(true);
@@ -32,7 +32,7 @@
       }
     }
 
-    /* Checks routes[] for regex match against `url` and executes callback */
+    /* Checks routes[] for regex against url, executes callback, displays view */
     var processView = function(url) {
       removeCurrentTag();
       var route = null;
@@ -54,10 +54,10 @@
 
       // No matching routes; Execute defaultRoute
       if (defaultRoute) {
-        console.log("No matching views for url");
+        options = defaultRoute.cb(urlParams);
         riot.compile(defaultRoute.location, function() {
           currentTag = riot.mount(defaultRoute.name,
-            {urlParams: urlParams, interface: options});
+            {urlParams: urlParams, interface: options})[0];
         });
       }
     }
@@ -73,7 +73,8 @@
     return {
       addRoute: addRoute,
       processView: processView,
-      parseUrl: parseUrl
+      parseUrl: parseUrl,
+      setDefaultRoute: setDefaultRoute
     };
 
   }());
