@@ -31,6 +31,7 @@
       self.refs.username.value = '';
       self.refs.password.value = '';
       self.update();
+      self.refs.username.select();
     }
 
     /* ------------ Interface ---------- */
@@ -47,7 +48,7 @@
     /* Display errors returned by login */
     auth.on('error', (data) => {
       self.error = data;
-      self.update();
+      resetFields();
     });
 
     /* Go to next view on success */

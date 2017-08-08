@@ -27,10 +27,8 @@
           .catch((error) => {
             // Interpret error and return to view
             var msg = '';
-            if (error.code === "auth/user-not-found") {
-              msg = "User with email " + params.username +
-                " cannot be found.";
-            } else if (error.code === "auth/wrong-password") {
+            if (error.code === "auth/wrong-password" ||
+                error.code === "auth/user-not-found") {
               msg = "Incorrect username or password.";
             } else {
               msg = error.message;
