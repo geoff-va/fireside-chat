@@ -8,7 +8,7 @@
       <tr each={ messages }>
         <td>
           <div>
-            <div class="message-user">{ useremail }</div>
+            <div class="message-user">{ displayname }</div>
             <div class="message">{ message }</div>
           </div>
         </td>
@@ -21,41 +21,45 @@
     this.messages = [];
     this.roomname = '';
     var self = this;
+    // because it's a nested tag, get opts from parent
+    var obs = this.parent.opts.interface.obs;
 
-    // Retrieve room name
-    var roomref = firebase.database().ref('rooms/' + opts.roomid);
-    roomref.once('value', function(snap) {
-      self.roomname = snap.val().name;
+    /* ---------- View Logic ----------- */
+    function scrollToBottom(elId) {
+      var msgwin = document.getElementById(elId);
+      if (msgwin !== null) {
+        msgwin.scrollTop = msgwin.scrollHeight;
+      }
+    }
+
+    // TODO: See if we really need this one
+    this.on('mount', function() {
+      scrollToBottom("msgwindow");
     });
 
-    var msgref = firebase.database().ref('messages/' + opts.roomid);
-    console.log('room-message: ' + opts.roomid);
-
-    // TODO: Limit to last X messages, add more as user scrolls up in history
-    msgref.orderByChild('timestamp')
-      .on('child_added', function(snap) {
-        self.messages.push(snap.val());
-        self.update();
-        // TODO: This is probably occuring for each message and should happen
-        // once after all messages are loaded
-        var msgwin = document.getElementById('msgwindow');
-        if (msgwin !== null) {
-          msgwin.scrollTop = msgwin.scrollHeight;
-        }
-      });
-
-    // Necessary when coming back to the page
-    this.on('mount', function() {
-        var msgwin = document.getElementById('msgwindow');
-        if (msgwin !== null) {
-          console.log('mount');
-          msgwin.scrollTop = msgwin.scrollHeight;
-        }
-      })
-
+    /* Round back button */
     back(e) {
       window.location = "#/rooms";
     }
+
+    /* -------- Interface Logic ------------ */
+    /* Load the Room Name */
+    obs.one('roomname', (name) => {
+      self.roomname = name;
+      self.update();
+    });
+
+    /* Load messages as they come in and scroll to bottom of window */
+    obs.on('newMessage', (message) => {
+      self.messages.push(message);
+      self.update();
+      scrollToBottom("msgwindow");
+    });
+  
+    // Run Observers
+    obs.getRoomName();
+    obs.getMessages();
+  
   </script>
 
 </room-messages>

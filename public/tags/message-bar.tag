@@ -10,16 +10,17 @@
 
 
   <script>
-
+    var obs = this.parent.opts.interface.obs;
+  
+    /* -------- Interface Logic ------------ */
+    /* Submit message content */
     send_message(e) {
       e.preventDefault();
-      var ref = firebase.database().ref('messages/' + opts.roomid);
       var content = {
         message: this.refs.message.value,
-        useremail: firebase.auth().currentUser.email,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
-      ref.push(content);
+      obs.trigger("send", content);
       this.refs.message.value = '';
     }
     </script>
