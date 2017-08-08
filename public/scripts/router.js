@@ -1,47 +1,65 @@
+/* Router - handles url hash pattern matching and View display */
 ;(function(riot, rtcApp) {
   var router = rtcApp.router = rtcApp.router || (function() {
     var routes = [];
     var currentTag = null;
+    var defaultRoute = null;
 
-    /* Add a regex to `routes` */
-    var addRoute = function(regex, location, name) {
-      if (routes.length > 0) {
-        for (i=0; i<routes.length; i++) {
-          if (routes[i]['regex'] === regex) {
-            routes[i]['location'] = location;
-            routes[i]['name'] = name;
-            return;
-          }
-        }
-      }
-      routes.push({regex: regex, location: location, name: name});
+    /* Sets the default route to be executed if no regex matches occur */
+    var setDefaultRoute = function(regex, location, name, cb) {
+      defaultRoute = {regex: regex, location: location, name: name, cb: cb};
     }
 
-    /* Search through routes and run cb for first route matching `path` */
-    var processView = function(url) {
-      // Unmount the currently mounted tag to make room for next view
-      if (currentTag !== null) {
-        currentTag[0].unmount(true);
-        currentTag = null;
-      };
+    /* Add a regex to `routes` */
+    var addRoute = function(regex, location, name, cb) {
+      // Replace route if it already exists in routes array
+      for (i=0; i<routes.length; i++) {
+        if (routes[i]['regex'] === regex) {
+          routes[i]['location'] = location;
+          routes[i]['name'] = name;
+          routes[i]['cb'] = cb;
+          return;
+        }
+      }
+      routes.push({regex: regex, location: location, name: name, cb: cb});
+    }
 
-      console.log("processing view");
+    /* Remove currently active tag (view) */
+    var removeCurrentTag = function() {
+      if (currentTag !== null) {
+        currentTag.unmount(true);
+        currentTag = null;
+      }
+    }
+
+    /* Checks routes[] for regex match against `url` and executes callback */
+    var processView = function(url) {
+      removeCurrentTag();
       var route = null;
+
+      // Find if any routes regex match url
       for (i=0; i<routes.length; i++) {
         route = routes[i]
-        params = parseUrl(route.regex, url)
-        if (params) {
-          // Maybe all riot rendering should be done somewhere else ...
+        urlParams = parseUrl(route.regex, url)
+        if (urlParams) {
+          options = route.cb(urlParams);
+
+          // TODO: All rendering could be broken out somewhere else?
           riot.compile(route.location, function() {
-            console.log("loading: " + route.name);
-            console.log("using params: " + params);
-            currentTag = riot.mount(route.name, params);
+            currentTag = riot.mount(route.name, {urlParams: urlParams, interface: options})[0];
           });
           return;
         }
       }
-      console.log("No matching views for url");
-      // No URL match - do something by default?
+
+      // No matching routes; Execute defaultRoute
+      if (defaultRoute) {
+        console.log("No matching views for url");
+        riot.compile(defaultRoute.location, function() {
+          currentTag = riot.mount(defaultRoute.name,
+            {urlParams: urlParams, interface: options});
+        });
+      }
     }
 
     /* Parse `path` using `regex` */
@@ -51,11 +69,11 @@
       return result;
     }
 
+    // Expose the following
     return {
       addRoute: addRoute,
       processView: processView,
-      parseUrl: parseUrl,
-      routes: routes
+      parseUrl: parseUrl
     };
 
   }());

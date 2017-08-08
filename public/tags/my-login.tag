@@ -21,21 +21,11 @@
   </div>
 
   <script>
+    var auth = opts.interface.auth;
     var self = this;
+    var refs = this.refs;
 
-    /* Translate errors to something more user friendly */
-    function setError(error) {
-      if (error.code === "auth/user-not-found") {
-        self.error = "User with email " + self.refs.username.value + 
-          " cannot be found.";
-      } else if (error.code === "auth/wrong-password") {
-        self.error = "Incorrect username or password.";
-      } else {
-        self.error = error.message;
-      }
-      self.update();
-    }
-    
+    /* ------ Local Functions -------- */
     /* Reset the input fields */
     function resetFields() {
       self.refs.username.value = '';
@@ -43,26 +33,27 @@
       self.update();
     }
 
+    /* ------------ Interface ---------- */
     /* login user with username and password */
     login(e) {
-      self = this;  // keep this context
       e.preventDefault();
-      var refs = this.refs;
-      
-      firebase.auth().
-      signInWithEmailAndPassword(refs.username.value, refs.password.value)
-      .then(function() {
-        console.log("Successfully signed in");
-        self.error ='';
-        resetFields();
-          })
-      .catch(function(error) {
-        console.log(error.code);
-        console.log(error.message);
-        setError(error);
-        resetFields();
-      });
+      var payload = {
+        username: refs.username.value,
+        password: refs.password.value
+      };
+      auth.trigger('login', payload);
     }
+
+    /* Display errors returned by login */
+    auth.on('error', (data) => {
+      self.error = data;
+      self.update();
+    });
+
+    /* Go to next view on success */
+    auth.on('success', (params) => {
+      window.location = params.nextView;
+    });
 
   </script>
 
