@@ -1,6 +1,18 @@
 ;(function(riot, firebase, rtcApp) {
   var routes = rtcApp.routes = rtcApp.routes || (function() {
 
+    function formatDateTime(dateTime) {
+      let month = ("0" + dateTime.getMonth().toString()).slice(-2);
+      let day = ("0" + dateTime.getDate().toString()).slice(-2);
+      let year = dateTime.getFullYear().toString().slice(-2);
+      let hour = ("0" + dateTime.getHours().toString()).slice(-2);
+      let minutes = ("0" + dateTime.getMinutes().toString()).slice(-2);
+      let seconds = ("0" + dateTime.getSeconds().toString()).slice(-2);
+      let stamp = month+"/"+day+"/"+year+" "+hour+":"+minutes+":"+seconds;
+
+      return stamp;
+    }
+
     /* Login view function */
     var login = function(urlParams) {
       var auth = riot.observable();
@@ -86,19 +98,31 @@
       }
 
       // Pass messages into the room
-      // TODO: Limit to most recent XX messages
       var msgref = firebase.database().ref('messages/' + roomid);
-      obs.getMessages = function() {
-        msgref.orderByChild('timestamp')
+      obs.getMessages = function(limit) {
+        msgref.orderByKey().limitToLast(limit)
           .on('child_added', (snap) => {
             var message = snap.val();
             var d = new Date(message.timestamp);
-            message.timestamp = d.getMonth()+1+"/"+d.getDate()+"/"+d.getFullYear()+" " +
-              d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+            message.timestamp = formatDateTime(d);
+            message['roomKey'] = snap.key;
 
             obs.trigger('newMessage', message);
           });
       }
+
+      /* Send more messagse in as they are requested */
+      obs.on('requestMore', (data) => {
+        msgref.orderByKey().endAt(data.end).limitToLast(data.quantity)
+          .on('child_added', (snap) => {
+            var message = snap.val();
+            var d = new Date(message.timestamp);
+            message.timestamp = formatDateTime(d);
+            message['roomKey'] = snap.key;
+
+            obs.trigger('addOlderMessage', message);
+          });
+      });
 
       // Upload a message sent from chat
       obs.on("send", (payload) => {

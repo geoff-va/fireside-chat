@@ -114,6 +114,10 @@ h1 {
   padding: 0px 10px;
 }
 
+.header .logout {
+  box-shadow: none;
+}
+
 /* --------- Chat Rooms ------------ */
 .room-table {
   border-collapse: collapse;
@@ -166,6 +170,27 @@ h1 {
 
 .message {
   white-space: pre-wrap;
+}
+
+.loading {
+  position: absolute;
+  margin: 0px auto;
+  width: 150px;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  background-color: #746A5C;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1em;
+  color: #FFD59C;
+  text-align: center;
+  transition: opacity 0.2s ease;
+}
+
+.show-loading {
+  opacity: 1;
 }
 
 /* --------- Message Bar -------------- */

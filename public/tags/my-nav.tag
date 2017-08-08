@@ -6,7 +6,7 @@
       <h1 class="brand-title">{ title }</h1>
     <div class="user-details">
       <span>{ username }</span>
-      <span class="button" onclick={ logout } if={ username }>Log Out</span>
+      <span class="button logout" onclick={ logout } if={ username }>Log Out</span>
     </div>
   </div>
 
