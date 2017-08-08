@@ -24,6 +24,7 @@
     var auth = opts.interface.auth;
     var self = this;
     var refs = this.refs;
+
     /* ------ Local Functions -------- */
     /* Reset the input fields */
     function resetFields() {

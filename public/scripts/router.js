@@ -69,13 +69,11 @@
       return result;
     }
 
+    // Expose the following
     return {
       addRoute: addRoute,
       processView: processView,
-      parseUrl: parseUrl,
-      routes: routes,
-      currentTag: currentTag
-
+      parseUrl: parseUrl
     };
 
   }());

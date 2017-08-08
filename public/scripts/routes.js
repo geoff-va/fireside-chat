@@ -140,12 +140,40 @@
       return {obs: obs};
     }
 
+    var addRoom = function(urlParams) {
+      var obs = riot.observable();
+      var ref = firebase.database().ref('rooms');
+
+      /* Create new room if name doesn't already exist, else trigger error */
+      obs.on('addRoom', (data) => {
+        ref.orderByChild('name').equalTo(data.roomname)
+          .once('value', function(snap) {
+            if (snap.val() === null) {
+              var newRoom = {
+                name: data.roomname,
+                description: data.description
+            };
+              ref.push(newRoom).then(() => {
+                obs.trigger('success', {nextView: "#/rooms"});
+              });
+
+            } else {
+              var error = "Sorry, but " + data.roomname + " already exists!";
+              obs.trigger('error', error);
+            }
+        });
+      });
+
+      return {obs: obs};
+    }
+
     // Expose these functions
     return {
       login: login,
       signup: signup,
       chatRoom: chatRoom,
-      chatRooms: chatRooms
+      chatRooms: chatRooms,
+      addRoom: addRoom
     }
 
   })();
