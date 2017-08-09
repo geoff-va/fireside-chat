@@ -52,7 +52,7 @@
             lastKey = self.messages[0].roomKey;
           }
           obs.trigger("requestMore", {quantity: numToFetch, end: lastKey});
-          setTimeout(() => {
+          setTimeout(function() {
             waitToFetch=false;
             self.refs.loading.classList.remove('show-loading');
           }, fetchWaitTime);
@@ -72,20 +72,20 @@
 
     /* ----------- Interface ------------- */
     /* Load the Room Name */
-    obs.one('roomname', (name) => {
+    obs.one('roomname', function(name) {
       self.roomname = name;
       self.update();
     });
 
     /* Load new messages as they come in and scroll to bottom of window */
-    obs.on('newMessage', (message) => {
+    obs.on('newMessage', function(message) {
       self.messages.push(message);
       self.update();
       scrollToBottom("msgwindow");
     });
 
     /* Loads older messages into the chat window */
-    obs.on('addOlderMessage', (message) => {
+    obs.on('addOlderMessage', function(message) {
       /* Since data comes in from firebase always in ascending order,
       splice it into the front of the array for each batch that we fetch.
       The last key it sends is inclusive of endpoint, so we ignore it */

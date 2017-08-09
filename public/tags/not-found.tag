@@ -4,8 +4,8 @@
 
   <script>
   /* Sends you to login after 3 seconds */
-  this.on('mount', () => {
-      setTimeout(()=>{
+  this.on('mount',function () {
+      setTimeout(function() {
         window.location = "#/login";
           }, 3000);
       })

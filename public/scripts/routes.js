@@ -3,13 +3,13 @@
 
     /* Returns string of dateTime in MM/DD/YY HH:MM:SS format */
     function formatDateTime(dateTime) {
-      let month = ("0" + dateTime.getMonth().toString()).slice(-2);
-      let day = ("0" + dateTime.getDate().toString()).slice(-2);
-      let year = dateTime.getFullYear().toString().slice(-2);
-      let hour = ("0" + dateTime.getHours().toString()).slice(-2);
-      let minutes = ("0" + dateTime.getMinutes().toString()).slice(-2);
-      let seconds = ("0" + dateTime.getSeconds().toString()).slice(-2);
-      let stamp = month+"/"+day+"/"+year+" "+hour+":"+minutes+":"+seconds;
+      var month = ("0" + dateTime.getMonth().toString()).slice(-2);
+      var day = ("0" + dateTime.getDate().toString()).slice(-2);
+      var year = dateTime.getFullYear().toString().slice(-2);
+      var hour = ("0" + dateTime.getHours().toString()).slice(-2);
+      var minutes = ("0" + dateTime.getMinutes().toString()).slice(-2);
+      var seconds = ("0" + dateTime.getSeconds().toString()).slice(-2);
+      var stamp = month+"/"+day+"/"+year+" "+hour+":"+minutes+":"+seconds;
 
       return stamp;
     }
@@ -19,13 +19,13 @@
     var login = function(urlParams) {
       var auth = riot.observable();
 
-      auth.on('login', (params) => {
+      auth.on('login', function(params) {
         firebase.auth().
         signInWithEmailAndPassword(params.username, params.password)
-          .then(() => {
+          .then(function() {
             auth.trigger('success', {nextView: "#/rooms"});
           })
-          .catch((error) => {
+          .catch(function(error) {
             // Interpret error and return to view
             var msg = '';
             if (error.code === "auth/wrong-password" ||
@@ -46,10 +46,10 @@
     var signup = function(urlParams) {
       var obs = riot.observable();
 
-      obs.on('signup', (data) => {
+      obs.on('signup', function(data) {
         firebase.auth()
         .createUserWithEmailAndPassword(data.useremail, data.password)
-        .then((user) => {
+        .then(function(user) {
           // Add display name to user profile
           user.updateProfile({
             displayName: data.displayname,
@@ -59,7 +59,7 @@
           // Go to next view
           obs.trigger('success', {nextView: "#/rooms"} );
         })
-        .catch((error) => {
+        .catch(function(error) {
           var useremail_error = '';
           var pwd1_error = '';
 
@@ -92,7 +92,7 @@
 
       // Get room name and pass it to the room
       obs.getRoomName = function() {
-        roomref.once('value', (snap) => {
+        roomref.once('value', function(snap) {
           var roomname = snap.val().name;
           obs.trigger('roomname', roomname);
         });
@@ -102,7 +102,7 @@
       var msgref = firebase.database().ref('messages/' + roomid);
       obs.getMessages = function(limit) {
         msgref.orderByKey().limitToLast(limit)
-          .on('child_added', (snap) => {
+          .on('child_added', function(snap) {
             var message = snap.val();
             var d = new Date(message.timestamp);
             message.timestamp = formatDateTime(d);
@@ -113,9 +113,9 @@
       }
 
       /* Send more messagse in as they are requested */
-      obs.on('requestMore', (data) => {
+      obs.on('requestMore', function(data) {
         msgref.orderByKey().endAt(data.end).limitToLast(data.quantity)
-          .on('child_added', (snap) => {
+          .on('child_added', function(snap) {
             var message = snap.val();
             var d = new Date(message.timestamp);
             message.timestamp = formatDateTime(d);
@@ -126,11 +126,11 @@
       });
 
       // Upload a message sent from chat
-      obs.on("send", (payload) => {
+      obs.on("send", function(payload) {
         var user = firebase.auth().currentUser;
         payload['displayname'] = user.displayName;
         payload['userid'] = user.uid;
-        msgref.push(payload).catch((error) => {
+        msgref.push(payload).catch(function(error) {
           console.log(error);
         });
       });
@@ -178,7 +178,7 @@
       var ref = firebase.database().ref('rooms');
 
       /* Create new room if name doesn't already exist, else trigger error */
-      obs.on('addRoom', (data) => {
+      obs.on('addRoom', function(data) {
         ref.orderByChild('name').equalTo(data.roomname)
           .once('value', function(snap) {
             if (snap.val() === null) {
@@ -186,7 +186,7 @@
                 name: data.roomname,
                 description: data.description
             };
-              ref.push(newRoom).then(() => {
+              ref.push(newRoom).then(function() {
                 obs.trigger('success', {nextView: "#/rooms"});
               });
 

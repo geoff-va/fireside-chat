@@ -86,7 +86,7 @@
     }
 
     /* Display errors returned by signup */
-    obs.on('error', (error) => {
+    obs.on('error', function(error) {
       resetFields(error.useremail_error, error.pwd1_error);
       self.useremail_error = error.useremail_error;
       self.pwd1_error = error.pwd1_error;
@@ -94,7 +94,7 @@
     });
 
     /* Go to next view on success */
-    obs.on('success', (params) => {
+    obs.on('success', function(params) {
       window.location = params.nextView;
     });
 

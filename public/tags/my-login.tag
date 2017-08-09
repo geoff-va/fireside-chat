@@ -46,13 +46,13 @@
     }
 
     /* Display errors returned by login */
-    auth.on('error', (data) => {
+    auth.on('error', function(data) {
       self.error = data;
       resetFields();
     });
 
     /* Go to next view on success */
-    auth.on('success', (params) => {
+    auth.on('success', function(params) {
       window.location = params.nextView;
     });
 

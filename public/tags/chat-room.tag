@@ -4,7 +4,7 @@
 
   <script>
     /* Adjust Message Window height to accomodate Message Bar height */
-    this.one('mount', () => {
+    this.one('mount', function() {
       /* Set limits and initial height */
       this.maxHeight = 105 + 30;
       this.msgBar = this.tags['message-bar'];
@@ -13,7 +13,7 @@
       this.msgWin.refs.msgwindow.style.bottom = height + 30 + "px";
       
       /* Update height based on msg bar height */
-      this.msgBar.on('update', () => {
+      this.msgBar.on('update', function() {
         var msgBarHeight = this.msgBar.refs.message.scrollHeight + 30;
         var newHeight = Math.min(this.maxHeight, msgBarHeight) + "px";
         this.msgWin.refs.msgwindow.style.bottom = newHeight;

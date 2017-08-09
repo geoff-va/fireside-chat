@@ -26,7 +26,7 @@
     }
 
     /* Set initial height of textarea */
-    this.one('mount', () => {
+    this.one('mount', function() {
         this.refs.message.style.height = '';
         this.refs.message.style.height = this.refs.message.scrollHeight + "px";
     });
