@@ -38,10 +38,11 @@
 
     /* Handle Shift+Enter for new lines, Enter for sending message */
     handleDown(e) {
-      if (e.key === 'Enter' && e.shiftKey) {
+      console.log(e);
+      if (e.keyCode === 13 && e.shiftKey) {
         // Let it create a new line itself;
 
-      } else if (e.key === 'Enter') {
+      } else if (e.keyCode === 13) {
         e.preventDefault();
         self.send_message();
         adjustMsgBarHeight(true);

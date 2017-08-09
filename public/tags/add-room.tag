@@ -39,18 +39,18 @@
       var content = {
         roomname: this.refs.roomname.value,
         description: this.refs.description.value
-      }
+      };
       obs.trigger('addRoom', content);
     }
 
     /* Update for error conditions */
-    obs.on('error', (error) => {
+    obs.on('error', function(error) {
       this.error = error;
       this.update();
     });
 
     /* No Error, go to nextView */
-    obs.on('success', (params) => {
+    obs.on('success', function(params) {
       window.location = params.nextView;
     });
 
