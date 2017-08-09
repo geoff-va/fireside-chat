@@ -1,7 +1,7 @@
 <my-nav>
   <div class="header">
     <div class="brand">
-      <img src="images/fire.png" height="50px" width="50px">
+      <img src="images/fire.png" height="50px" width="50px" />
     </div>
       <h1 class="brand-title">{ title }</h1>
     <div class="user-details">
