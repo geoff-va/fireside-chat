@@ -9,7 +9,7 @@
     router.addRoute("^#/rooms$", 'tags/chat-rooms.tag', 'chat-rooms', rtcApp.routes.chatRooms);
     router.addRoute("^#/rooms/create", 'tags/add-room.tag', 'add-room', rtcApp.routes.addRoom);
     router.addRoute("^#/room/([a-zA-Z0-9._-]+)$", 'tags/chat-room.tag', 'chat-room', rtcApp.routes.chatRoom);
-    router.setDefaultRoute('', 'tags/not-found.tag', 'not-found', (urlParams) => {return {};});
+    router.setDefaultRoute('', 'tags/not-found.tag', 'not-found', function(urlParams) {return {};});
 
     /* Watch for changes in the hash so we can process manually changed views */
     window.addEventListener('hashchange', function(e) {

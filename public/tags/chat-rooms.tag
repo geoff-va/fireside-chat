@@ -39,10 +39,10 @@
     }
     
     /* If no rooms exist, display msg to user to add one */
-    this.one('mount', () => {
+    this.one('mount', function() {
       // w/o this timeout, it flashes the error msg before objects load
       // A bit hacky, but works (unless server was really slow :\)
-      setTimeout(() => {
+      setTimeout(function() {
         self.emptyMsg = 'No Rooms Exist! Click the + to Create One!';
         self.update();
       }, 1500)
@@ -50,14 +50,14 @@
 
     /* ----------- Interface ------------- */
     /* Subscribe to room additions */
-    obs.on('addRoom', (room) => {
+    obs.on('addRoom', function(room) {
       self.lastRoom = room;
       self.rooms[room.id] = room.value;
       self.update();
     });
 
     /* Subscribe to removals of rooms */
-    obs.on('deleteRoom', (room) => {
+    obs.on('deleteRoom', function(room) {
       delete self.rooms[room.id];
       // Redisplay empty list msg if they have all been deleted
       if (Object.keys(self.rooms).length === 0) {
@@ -67,7 +67,7 @@
     });
 
     /* Subscribe to changes in room details */
-    obs.on('changeRoom', (room) => {
+    obs.on('changeRoom', function(room) {
         self.rooms[room.id] = room.value;
         self.update();
       });
